@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JARVIS - AI Voice Assistant</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/assistant.css' %}">
+    <script src="{% static 'js/assistant.js' %}"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white shadow-lg mb-8">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center py-4">
+                <a href="{% url 'index' %}" class="flex items-center hover-scale">
+                    <i class="fas fa-robot text-blue-500 text-2xl mr-2"></i>
+                    <span class="text-xl font-bold">JARVIS</span>
+                </a>
+                {% if user.is_authenticated %}
+                    <div class="flex items-center space-x-4">
+                        <a href="{% url 'command_history' %}" class="text-gray-600 hover:text-blue-500 hover-scale">
+                            <i class="fas fa-history mr-1"></i>
+                            History
+                        </a>
+                        <form action="{% url 'logout' %}" method="post" class="inline">
+                            {% csrf_token %}
+                            <button type="submit" class="text-gray-600 hover:text-red-500 hover-scale">
+                                <i class="fas fa-sign-out-alt mr-1"></i>
+                                Logout
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4">
+        {% block content %}{% endblock %}
+    </div>
+
+    <footer class="mt-8 py-4 bg-white shadow-lg">
+        <div class="container mx-auto px-4 text-center text-gray-600">
+            <p>&copy; {% now "Y" %} JARVIS AI Assistant. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html> 
